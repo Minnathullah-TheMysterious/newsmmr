@@ -20,10 +20,6 @@ const News = ({ pageSize }) => {
   const [page, setPage] = usePage();
   const [totalResults, setTotalResults] = useTotalResults();
 
-  useEffect(() => {
-    updateNews();
-  }, [country, category, search, pageSize]);
-
   const updateNews = async () => {
     try {
       const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&q=${search}&page=1&pageSize=${pageSize}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
@@ -39,16 +35,21 @@ const News = ({ pageSize }) => {
     }
   };
 
+  useEffect(() => {
+    updateNews();
+    // eslint-disable-next-line
+  }, [country, category, search, pageSize]);
+
   const fetchMoreData = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       setPage(page + 1);
       const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&q=${search}&page=${page}&pageSize=${pageSize}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
       const data = await fetch(url);
       const parsedData = await data.json();
       setArticles(articles.concat(parsedData.articles));
       setTotalResults(parsedData.totalResults);
-      setLoading(false)
+      setLoading(false);
     } catch (error) {
       setLoading(false);
       console.error("Error fetching news:", error);
