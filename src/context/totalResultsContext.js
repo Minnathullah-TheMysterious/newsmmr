@@ -6,7 +6,7 @@ const totalResultsContext = createContext();
 const useTotalResults = () => useContext(totalResultsContext);
 
 const TotalResultsProvider = ({ children }) => {
-  const [totalResults, setTotalResults] = useState();
+  const [totalResults, setTotalResults] = useState(0);
 
   return (
     <totalResultsContext.Provider value={[totalResults, setTotalResults]}>

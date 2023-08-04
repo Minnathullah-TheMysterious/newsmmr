@@ -2,7 +2,6 @@ import React from "react";
 import Layout from "../components/layouts/Layout";
 import News from "../components/News";
 import { useCategory } from "../context/CategoryContext";
-import Pagination from "../components/Pagination";
 
 const HomePage = () => {
   //cotext api
@@ -22,12 +21,9 @@ const HomePage = () => {
         <h1 className="text-center mt-4 fw-semibold">
           NewsMMR - Top {capitalizeFirstLetter(category)} Headlines
         </h1>
-        <div className="container">
-          <News pageSize={pageSize} />
-          <div className="my-4">
-            <Pagination pageSize={pageSize} />
-          </div>
-        </div>
+      </div>
+      <div className="container">
+        <News pageSize={pageSize} />
       </div>
     </Layout>
   );

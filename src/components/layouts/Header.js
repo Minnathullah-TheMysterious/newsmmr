@@ -16,7 +16,7 @@ const Header = () => {
   //Context apis
   const [country, setCountry] = useCountry();
   const [category, setCategory] = useCategory();
-  const [setSearch] = useSearch();
+  const [search, setSearch] = useSearch();
 
   const handleSearchChange = (e) => {
     setSearchValueOnChange(e.target.value);
