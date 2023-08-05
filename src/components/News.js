@@ -8,6 +8,7 @@ import { useCategory } from "../context/CategoryContext";
 import { useSearch } from "../context/SearchContext";
 import { usePage } from "../context/PageContxt";
 import { useTotalResults } from "../context/totalResultsContext";
+import { useProgress } from "../context/ProgressContext";
 
 const News = ({ pageSize }) => {
   const [articles, setArticles] = useState([]);
@@ -19,16 +20,21 @@ const News = ({ pageSize }) => {
   const [search] = useSearch();
   const [page, setPage] = usePage();
   const [totalResults, setTotalResults] = useTotalResults();
+  const [progress, setProgress] = useProgress();
 
   const updateNews = async () => {
     try {
       const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&q=${search}&page=1&pageSize=${pageSize}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
+      setProgress(progress + 20);
       setLoading(true);
       const data = await fetch(url);
+      setProgress(progress + 50);
       const parsedData = await data.json();
+      setProgress(progress + 80);
       setArticles(parsedData.articles);
       setTotalResults(parsedData.totalResults);
       setLoading(false);
+      setProgress(progress + 100);
     } catch (error) {
       setLoading(false);
       console.error("Error fetching news:", error);
@@ -42,16 +48,13 @@ const News = ({ pageSize }) => {
 
   const fetchMoreData = async () => {
     try {
-      setLoading(true);
+      const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&q=${search}&page=${page + 1}&pageSize=${pageSize}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
       setPage(page + 1);
-      const url = `https://newsapi.org/v2/top-headlines?country=${country}&category=${category}&q=${search}&page=${page}&pageSize=${pageSize}&apiKey=${process.env.REACT_APP_NEWS_API_KEY}`;
       const data = await fetch(url);
       const parsedData = await data.json();
       setArticles(articles.concat(parsedData.articles));
       setTotalResults(parsedData.totalResults);
-      setLoading(false);
     } catch (error) {
-      setLoading(false);
       console.error("Error fetching news:", error);
     }
   };
@@ -63,7 +66,7 @@ const News = ({ pageSize }) => {
         dataLength={articles && articles.length}
         next={fetchMoreData}
         hasMore={articles && articles.length !== totalResults}
-        loader={loading ? <Spinner /> : null}
+        loader={<Spinner />}
         style={{ overflow: "hidden" }}
       >
         <div className="row">

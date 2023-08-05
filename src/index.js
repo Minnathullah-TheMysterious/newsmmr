@@ -9,22 +9,25 @@ import { CategoryProvider } from "./context/CategoryContext";
 import { SearchProvider } from "./context/SearchContext";
 import { PageProvider } from "./context/PageContxt";
 import { TotalResultsProvider } from "./context/totalResultsContext";
+import { ProgressProvider } from "./context/ProgressContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <TotalResultsProvider>
-    <PageProvider>
-      <SearchProvider>
-        <CategoryProvider>
-          <CountryProvider>
-            <Router>
-              <App />
-            </Router>
-          </CountryProvider>
-        </CategoryProvider>
-      </SearchProvider>
-    </PageProvider>
-  </TotalResultsProvider>
+  <ProgressProvider>
+    <TotalResultsProvider>
+      <PageProvider>
+        <SearchProvider>
+          <CategoryProvider>
+            <CountryProvider>
+              <Router>
+                <App />
+              </Router>
+            </CountryProvider>
+          </CategoryProvider>
+        </SearchProvider>
+      </PageProvider>
+    </TotalResultsProvider>
+  </ProgressProvider>
 );
 
 // If you want to start measuring performance in your app, pass a function
