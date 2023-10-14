@@ -4,7 +4,7 @@ import News from "../components/News";
 import { useCategory } from "../context/CategoryContext";
 
 const HomePage = () => {
-  //cotext api
+  //context api
   const [category] = useCategory();
 
   const capitalizeFirstLetter = (word) => {
